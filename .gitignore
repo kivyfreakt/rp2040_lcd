@@ -1,0 +1,6 @@
+**.vscode/**
+clean.sh
+compile.sh
+firmware.sh
+build/*
+trash/*
