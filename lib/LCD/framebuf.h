@@ -37,6 +37,7 @@ struct Framebuf
     // ~Framebuf();
 
     // draw
+    virtual void display() = 0;
     void clear(uint16_t);
     void pixel(uint16_t, uint16_t, uint16_t);
     void point(uint16_t, uint16_t, uint16_t, uint16_t);

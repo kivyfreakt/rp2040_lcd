@@ -1,10 +1,11 @@
-﻿#include "lcd.h"
-#include <stdio.h>
+﻿#include <stdio.h>
+#include <stdlib.h> 
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
 #include "DEV_Config.h"
 #include "Debug.h"
-#include <stdlib.h> 
+#include "lcd.h"
+#include "turtle.h"
 
 int main(void)
 {
@@ -39,15 +40,31 @@ int main(void)
     lcd.rect(140, 40, 170, 70, BLUE, 2, 1);
 
     lcd.text(50, 100, "ABC", &Font20, PURPLE, WHITE);
-    lcd.text(50, 161, "test string", &Font16, ORANGE, WHITE);
-
-    // Paint_DrawCircle(150, 55, 15, GREEN, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-    // Paint_DrawCircle(185, 55, 15, GREEN, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-
-    // Paint_DrawNum(50, 80, 9.87654321, &Font20, 3, WHITE, BLACK);
-
-    lcd.display();
+    // lcd->text(50, 161, "test string", &Font16, ORANGE, WHITE);
     
+    lcd.display();
+
+    // Framebuf* frame = &lcd;
+
+    // frame->line(120, 120, 145, 120, BLACK, 1);
+    // frame->display();
+
+    // test Turtle
+
+    Turtle turtle(&lcd);
+
+    turtle.pendown();
+
+    turtle.move(25);
+
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     turtle.move(25);
+    //     turtle.left(90);
+    // }
+    
+    // lcd.display();
+
     DEV_Delay_ms(1000);
 
     while(true){}
