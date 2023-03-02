@@ -39,10 +39,10 @@ struct Framebuf
     // draw
     virtual void display() = 0;
     void clear(uint16_t);
-    void pixel(uint16_t, uint16_t, uint16_t);
-    void point(uint16_t, uint16_t, uint16_t, uint16_t);
-    void line(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
-    void rect(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint8_t);
+    void pixel(uint8_t, uint8_t, uint16_t);
+    void point(uint8_t, uint8_t, uint16_t, uint8_t);
+    void line(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
+    void rect(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t, bool);
     // void hline();
     // void vline();
     // void poly();
@@ -50,8 +50,8 @@ struct Framebuf
     // void ellipse();
 
     // text
-    void ch(uint16_t, uint16_t, const char, sFONT*, uint16_t, uint16_t);
-    void text(uint16_t, uint16_t, const char *, sFONT*, uint16_t, uint16_t);
+    void ch(uint8_t, uint8_t, const char, sFONT*, uint16_t, uint16_t);
+    void text(uint8_t, uint8_t, const char *, sFONT*, uint16_t, uint16_t);
 
     // pic
     // void image();
@@ -59,7 +59,7 @@ struct Framebuf
     // transform
     // void rotate(uint16_t);
     // void mirror(uint8_t);
-    // void scale();
+    // void scale();1
 };
 
 #endif

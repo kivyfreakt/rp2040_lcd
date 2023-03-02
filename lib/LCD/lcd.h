@@ -30,7 +30,7 @@ class LCD : public Framebuf
         LCD(uint16_t*);
         LCD(uint16_t*, uint8_t);
         void reset();
-        void display();
+        void display() override;
 
         void set_direction(uint8_t);
         uint8_t get_direction();

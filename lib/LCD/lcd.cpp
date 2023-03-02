@@ -11,6 +11,8 @@ LCD::LCD(uint16_t* canvas): Framebuf(canvas, LCD_HEIGHT, LCD_WIDTH)
     sleep_ms(100);
     this->set_direction(HORIZONTAL);
     this->init_reg();
+    this->clear(WHITE);
+    this->display();
 }
 
 LCD::LCD(uint16_t* canvas, uint8_t direction): Framebuf(canvas, LCD_HEIGHT, LCD_WIDTH)
@@ -19,6 +21,8 @@ LCD::LCD(uint16_t* canvas, uint8_t direction): Framebuf(canvas, LCD_HEIGHT, LCD_
     sleep_ms(100);
     this->set_direction(direction);
     this->init_reg();
+    this->clear(WHITE);
+    this->display();
 }
 
 void LCD::reset()
