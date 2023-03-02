@@ -4,19 +4,21 @@
 #include <algorithm>
 #include <iostream>
 #include <cmath>
-#include "lcd.h"
+#include "framebuf.h"
 
 #define degToRad(deg) (deg * M_PI / 180)
 
 class Turtle
 {
 
-    LCD* display = NULL; //Display for turtle graphics.
+    Framebuf* display; //Display for turtle graphics.
     std::stack <int> save_stack; // stack to store coordinates
     int x; //Current position of the turtle
     int y; //Current position of the turtle
     int direction;  // position of the turtle's head in space( in degrees )
     bool pen;
+    uint16_t pen_color;
+    uint8_t pen_size;
     
     int step;
     int angle;
@@ -24,7 +26,7 @@ class Turtle
     void draw(uint16_t, uint16_t);
 
     public:
-        Turtle(LCD*);
+        Turtle(Framebuf*);
         void init(int, int);
         void moveto(int, int);
         void move(int);
@@ -36,7 +38,12 @@ class Turtle
         bool get_pen();
         void set_pen(bool);
 
+        uint16_t get_color();
+        void set_color(uint16_t);
+
+        uint8_t get_size();
+        void set_size(uint8_t);
+
         void pendown();
         void penup();
-
 };

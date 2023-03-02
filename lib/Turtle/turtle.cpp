@@ -1,12 +1,14 @@
 #include "turtle.h"
 
-Turtle::Turtle(LCD *_display)
+Turtle::Turtle(Framebuf *_display)
 {
     this->display = _display;
     this->direction = 0;
     this->x = _display->width / 2;
     this->y = _display->height / 2;
     this->pen = false;
+    this->pen_color = BLACK;
+    this->pen_size = 1;
     this->step = 0;
     this->angle = 0;
 }
@@ -16,10 +18,31 @@ bool Turtle::get_pen()
     return pen;
 }
 
+void Turtle::set_color(uint16_t _color) 
+{
+    this->pen_color = _color;
+}
+
+uint16_t Turtle::get_color() 
+{
+    return this->pen_color;
+}
+
+void Turtle::set_size(uint8_t _size) 
+{
+    this->pen_size = _size;
+}
+
+uint8_t Turtle::get_size() 
+{
+    return this->pen_size;
+}
+
 void Turtle::set_pen(bool _pen) 
 {
     this->pen = _pen;
 }
+
 
 void Turtle::init(int _step, int _angle)
 {
@@ -99,6 +122,6 @@ void Turtle::penup()
 
 void Turtle::draw(uint16_t _x, uint16_t _y)
 {   
-    display->line(this->x, this->y, _x, _y, BLACK, 1);
+    display->line(this->x, this->y, _x, _y, this->pen_color, this->pen_size);
     display->display();
 }
