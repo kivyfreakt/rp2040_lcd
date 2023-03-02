@@ -34,7 +34,6 @@ struct Framebuf
     uint8_t height;
 
     Framebuf(uint16_t*, uint8_t, uint8_t);
-    // ~Framebuf();
 
     // draw
     virtual void display() = 0;
@@ -42,9 +41,9 @@ struct Framebuf
     void pixel(uint8_t, uint8_t, uint16_t);
     void point(uint8_t, uint8_t, uint16_t, uint8_t);
     void line(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
+    void hline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
+    void vline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void rect(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t, bool);
-    // void hline();
-    // void vline();
     // void poly();
     // void circle();
     // void ellipse();
@@ -59,7 +58,7 @@ struct Framebuf
     // transform
     // void rotate(uint16_t);
     // void mirror(uint8_t);
-    // void scale();1
+    // void scale();
 };
 
 #endif

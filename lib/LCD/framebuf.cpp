@@ -2,7 +2,6 @@
 #include "DEV_Config.h"
 #include <stdint.h>
 #include <stdlib.h>
-// #include <math.h>
 
 Framebuf::Framebuf(uint16_t* _canvas, uint8_t _width, uint8_t _height)
 {
@@ -76,6 +75,24 @@ void Framebuf::line(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_e
         }
 
     }
+}
+
+void Framebuf::hline(uint8_t x_start, uint8_t y_start, uint8_t line_width, uint16_t color, uint8_t size)
+{
+    if (x_start > this->width || y_start > this->height)
+        return;
+    
+    for (uint8_t x_point = x_start; x_point < x_start + line_width; x_point++)
+        this->point(x_point, y_start, color, size);
+}
+
+void Framebuf::vline(uint8_t x_start, uint8_t y_start, uint8_t line_height, uint16_t color, uint8_t size)
+{
+    if (x_start > this->width || y_start > this->height)
+        return;
+    
+    for (uint8_t y_point = y_start; y_point < y_start + line_height; y_point++)
+        this->point(x_start, y_point, color, size);
 }
 
 
