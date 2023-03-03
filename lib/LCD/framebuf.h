@@ -5,6 +5,7 @@
 #include "../Fonts/fonts.h"
 
 #define _swap_bytes(val) ( (((val)>>8)&0x00FF)|(((val)<<8)&0xFF00) )
+#define PI 3.14159265
 
 // Color definitions
 #define BLACK 0x0000       ///<   0,   0,   0
@@ -54,6 +55,8 @@ struct Framebuf
 
     // pic
     // void image();
+
+
 
     // transform
     // void rotate(uint16_t);
