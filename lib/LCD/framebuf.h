@@ -45,25 +45,13 @@ struct Framebuf
     void hline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void vline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void rect(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t, bool);
+
     uint16_t alpha_blend(uint8_t, uint16_t, uint16_t);
     void gradient(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t, bool);
-    // void poly();
-    // void circle();
-    // void ellipse();
 
     // text
-    void ch(uint8_t, uint8_t, const char, sFONT*, uint16_t, uint16_t);
-    void text(uint8_t, uint8_t, const char *, sFONT*, uint16_t, uint16_t);
-
-    // pic
-    // void image();
-
-
-
-    // transform
-    // void rotate(uint16_t);
-    // void mirror(uint8_t);
-    // void scale();
+    void ch(uint8_t, uint8_t, const char, Font*, uint16_t, uint16_t);
+    void text(uint8_t, uint8_t, const char *, Font*, uint16_t, uint16_t);
 };
 
 #endif

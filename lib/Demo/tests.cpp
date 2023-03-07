@@ -10,7 +10,7 @@ void test_display(LCD* display)
     {
         display->clear(colors[i]);
         display->display();
-        DEV_Delay_ms(5000);
+        DEV_Delay_ms(TEST_DELAY);
     }
 
     // gradients
@@ -20,7 +20,7 @@ void test_display(LCD* display)
     {
         display->gradient(0, 0, display->width, display->height, gradient_colors[i], gradient_colors[i+1], 0);
         display->display();
-        DEV_Delay_ms(5000);
+        DEV_Delay_ms(TEST_DELAY);
     }
 
     // graph primitives demo
@@ -40,8 +40,14 @@ void test_display(LCD* display)
     display->hline(135, 55, 30, CYAN, 1);
     display->vline(150, 40, 30, CYAN, 1);
 
-    display->text(50, 100, "ABC", &Font20, WHITE, BLACK);
     display->display();
-    DEV_Delay_ms(5000);
+    DEV_Delay_ms(TEST_DELAY);
 
+    // fonts demo
+    display->clear(BLACK);
+    display->text(30, 54, "ABCxyz123", &font12, WHITE, BLACK);
+    display->text(30, 98, "ABCxyz123", &font16, RED, BLACK);
+    display->text(30, 142, "ABCxyz123", &font20, WHITE, GREEN);
+    display->text(30, 186, "ABCxyz123", &font24, BLUE, WHITE);
+    display->display();
 }

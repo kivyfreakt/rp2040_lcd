@@ -1,33 +1,20 @@
 #ifndef __FONTS_H
 #define __FONTS_H
 
-#define MAX_HEIGHT_FONT         41
-#define MAX_WIDTH_FONT          32
-#define OFFSET_BITMAP           
-
-#ifdef __cplusplus
- extern "C" {
-#endif
-
 #include <stdint.h>
 
-//ASCII
-typedef struct _tFont
-{    
-  const uint8_t *table;
-  uint16_t Width;
-  uint16_t Height;
-  
-} sFONT;
+struct Font
+{
+    const uint8_t *table;
+    uint8_t width;
+    uint8_t height;
 
-extern sFONT Font24;
-extern sFONT Font20;
-extern sFONT Font16;
-extern sFONT Font12;
-extern sFONT Font8;
+    Font(const uint8_t* _table, uint8_t _width, uint8_t _height): table(_table), width(_width), height(_height){};
+};
 
-#ifdef __cplusplus
-}
-#endif
-  
+extern Font font24;
+extern Font font20;
+extern Font font16;
+extern Font font12;
+
 #endif

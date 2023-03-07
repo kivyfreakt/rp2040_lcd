@@ -121,19 +121,20 @@ void Framebuf::clear(uint16_t color)
     }
 }
 
-void Framebuf::ch(uint8_t x, uint8_t y, const char ascii, sFONT* font, uint16_t foreground, uint16_t background)
+void Framebuf::ch(uint8_t x, uint8_t y, const char ascii, Font *font, uint16_t foreground, uint16_t background)
 {
     uint16_t page, column;
 
     if (x > this->width || y > this->height) 
         return;
 
-    uint32_t offset = (ascii - ' ') * font->Height * (font->Width / 8 + (font->Width % 8 ? 1 : 0));
+    uint32_t offset = (ascii - ' ') * font->height * (font->width / 8 + (font->width % 8 ? 1 : 0));
     const unsigned char *ptr = &font->table[offset];
 
-    for (page = 0; page < font->Height; page ++ ) {
-        for (column = 0; column < font->Width; column ++ ) {
-
+    for (page = 0; page < font->height; page++) 
+    {
+        for (column = 0; column < font->width; column++) 
+        {
             // To determine whether the font background color and screen background color is consistent
             if (*ptr & (0x80 >> (column % 8)))
             {
@@ -147,12 +148,12 @@ void Framebuf::ch(uint8_t x, uint8_t y, const char ascii, sFONT* font, uint16_t 
             if (column % 8 == 7)
                 ptr++;
         }// Write a line
-        if (font->Width % 8 != 0)
+        if (font->width % 8 != 0)
             ptr++;
     }// Write all
 }
 
-void Framebuf::text(uint8_t x, uint8_t y, const char * str, sFONT* font, uint16_t foreground, uint16_t background)
+void Framebuf::text(uint8_t x, uint8_t y, const char *str, Font *font, uint16_t foreground, uint16_t background)
 {
     uint8_t x_point = x;
     uint8_t y_point = y;
@@ -160,25 +161,28 @@ void Framebuf::text(uint8_t x, uint8_t y, const char * str, sFONT* font, uint16_
     if (x > this->width || y > this->height) 
         return;
 
-    while (* str != '\0') {
-        //if X direction filled , reposition to(x,y_point),y_point is Y direction plus the Height of the character
-        if ((x_point + font->Width) > this->width) {
+    while (* str != '\0') 
+    {
+        //if X direction filled , reposition to(x,y_point),y_point is Y direction plus the height of the character
+        if ((x_point + font->width) > this->width) 
+        {
             x_point = x;
-            y_point += font->Height;
+            y_point += font->height;
         }
 
         // If the Y direction is full, reposition to(x, y)
-        if ((y_point  + font->Height ) > this->height) {
+        if ((y_point  + font->height) > this->height) 
+        {
             x_point = x;
             y_point = y;
         }
-        this->ch(x_point, y_point, * str, font, background, foreground);
+        this->ch(x_point, y_point, *str, font, background, foreground);
 
         //The next character of the address
         str++;
 
         //The next word of the abscissa increases the font of the broadband
-        x_point += font->Width;
+        x_point += font->width;
     }
 }
 

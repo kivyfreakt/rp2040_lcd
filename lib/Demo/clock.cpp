@@ -41,18 +41,18 @@ void draw_clock(Framebuf* canvas, uint8_t hour, uint8_t min, uint8_t sec)
         canvas->line(x1, y1, x2, y2, risk_color, 2);
     }
 
-    canvas->text(165, 30, "1", &Font16, riskdigit_color, background);
-    canvas->text(200, 63, "2", &Font16, riskdigit_color, background);
-    canvas->text(207, 106, "3", &Font24, riskdigit_color, background);
-    canvas->text(200, 160, "4", &Font16, riskdigit_color, background);
-    canvas->text(165, 193, "5", &Font16, riskdigit_color, background);
-    canvas->text(112, 195, "6", &Font24, riskdigit_color, background);
-    canvas->text(65, 193, "7", &Font16, riskdigit_color, background);
-    canvas->text(32, 160, "8", &Font16, riskdigit_color, background);
-    canvas->text(17, 106, "9", &Font24, riskdigit_color, background);
-    canvas->text(32, 63, "10", &Font16, riskdigit_color, background);
-    canvas->text(65, 30,"11", &Font16, riskdigit_color, background);
-    canvas->text(106, 14,"12", &Font24, riskdigit_color, background);
+    canvas->text(165, 30, "1", &font16, riskdigit_color, background);
+    canvas->text(200, 63, "2", &font16, riskdigit_color, background);
+    canvas->text(207, 106, "3", &font24, riskdigit_color, background);
+    canvas->text(200, 160, "4", &font16, riskdigit_color, background);
+    canvas->text(165, 193, "5", &font16, riskdigit_color, background);
+    canvas->text(112, 195, "6", &font24, riskdigit_color, background);
+    canvas->text(65, 193, "7", &font16, riskdigit_color, background);
+    canvas->text(32, 160, "8", &font16, riskdigit_color, background);
+    canvas->text(17, 106, "9", &font24, riskdigit_color, background);
+    canvas->text(32, 63, "10", &font16, riskdigit_color, background);
+    canvas->text(65, 30,"11", &font16, riskdigit_color, background);
+    canvas->text(106, 14,"12", &font24, riskdigit_color, background);
 
     draw_arrow(canvas, sec * 6, 100, 1, sec_color);
     draw_arrow(canvas, min * 6 + sec / 10, 75, 2, arrow_color);
