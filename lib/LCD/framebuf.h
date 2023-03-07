@@ -45,6 +45,8 @@ struct Framebuf
     void hline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void vline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void rect(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t, bool);
+    uint16_t alpha_blend(uint8_t, uint16_t, uint16_t);
+    void gradient(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t, bool);
     // void poly();
     // void circle();
     // void ellipse();

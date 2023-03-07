@@ -115,8 +115,9 @@ void Framebuf::rect(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_e
 
 void Framebuf::clear(uint16_t color)
 {
+    uint16_t color_swapped = _swap_bytes(color); // костыль....
     for (int i = 0; i < this->height*this->width; i++) {
-        this->canvas[i] = color;
+        this->canvas[i] = color_swapped;
     }
 }
 
@@ -181,3 +182,44 @@ void Framebuf::text(uint8_t x, uint8_t y, const char * str, sFONT* font, uint16_
     }
 }
 
+void Framebuf::gradient(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color1, uint16_t color2, bool direction)
+{
+    if (direction)
+    {
+        float delta = -255.0/h;
+        float alpha = 255.0;
+        uint16_t color = color1;
+
+        while (h--) 
+        {
+            hline(x, y++, w, color, 1);
+            alpha += delta;
+            color = alpha_blend((uint8_t)alpha, color1, color2);
+        }
+    }
+    else
+    {
+        float delta = -255.0/w;
+        float alpha = 255.0;
+        uint16_t color = color1;
+
+        while (w--) 
+        {
+            vline(x++, y, h, color, 1);
+            alpha += delta;
+            color = alpha_blend((uint8_t)alpha, color1, color2);
+        }
+    }
+}
+
+uint16_t Framebuf::alpha_blend(uint8_t alpha, uint16_t color1, uint16_t color2)
+{
+    // Split out and blend 5 bit red and blue channels
+    uint32_t rxb = color2 & 0xF81F;
+    rxb += ((color1 & 0xF81F) - rxb) * (alpha >> 2) >> 6;
+    // Split out and blend 6 bit green channel
+    uint32_t xgx = color2 & 0x07E0;
+    xgx += ((color1 & 0x07E0) - xgx) * alpha >> 8;
+    // Recombine channels
+    return (rxb & 0xF81F) | (xgx & 0x07E0);
+}

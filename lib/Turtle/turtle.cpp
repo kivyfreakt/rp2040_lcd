@@ -9,8 +9,6 @@ Turtle::Turtle(Framebuf *_display)
     this->pen = false;
     this->pen_color = BLACK;
     this->pen_size = 1;
-    this->step = 0;
-    this->angle = 0;
 }
 
 bool Turtle::get_pen() 
@@ -41,13 +39,6 @@ uint8_t Turtle::get_size()
 void Turtle::set_pen(bool _pen) 
 {
     this->pen = _pen;
-}
-
-
-void Turtle::init(int _step, int _angle)
-{
-    this->step = _step;
-    this->angle = _angle;
 }
 
 void Turtle::moveto(int x1, int y1)

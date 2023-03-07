@@ -11,7 +11,7 @@ LCD::LCD(uint16_t* canvas): Framebuf(canvas, LCD_HEIGHT, LCD_WIDTH)
     sleep_ms(100);
     this->set_direction(HORIZONTAL);
     this->init_reg();
-    this->clear(WHITE);
+    this->clear(BLACK);
     this->display();
 }
 
@@ -21,7 +21,7 @@ LCD::LCD(uint16_t* canvas, uint8_t direction): Framebuf(canvas, LCD_HEIGHT, LCD_
     sleep_ms(100);
     this->set_direction(direction);
     this->init_reg();
-    this->clear(WHITE);
+    this->clear(BLACK);
     this->display();
 }
 
@@ -320,7 +320,7 @@ void LCD::set_direction(uint8_t _direction){
     }
 
     this->command(0x36); //MX, MY, RGB mode
-    this->data(MemoryAccessReg);	//0x08 set RGB
+    this->data(MemoryAccessReg); //0x08 set RGB
 }
 
 

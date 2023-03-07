@@ -20,14 +20,10 @@ class Turtle
     uint16_t pen_color;
     uint8_t pen_size;
     
-    int step;
-    int angle;
-
     void draw(uint16_t, uint16_t);
 
     public:
         Turtle(Framebuf*);
-        void init(int, int);
         void moveto(int, int);
         void move(int);
         void right(int);
