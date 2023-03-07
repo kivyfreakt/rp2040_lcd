@@ -22,4 +22,26 @@ void test_display(LCD* display)
         display->display();
         DEV_Delay_ms(5000);
     }
+
+    // graph primitives demo
+    display->clear(BLACK);
+    display->point(50, 41, BLACK, 1);
+    display->point(50, 46, BLACK, 2);
+    display->point(50, 51, BLACK, 3);
+    display->point(50, 56, BLACK, 4);
+    display->point(50, 61, BLACK, 5);
+
+    display->line(60, 40, 90, 70, MAGENTA, 2);
+    display->line(60, 70, 90, 40, MAGENTA, 2);
+
+    display->rect(60, 40, 90, 70, RED, 2, 0);
+    display->rect(100, 40, 130, 70, BLUE, 2, 1);
+
+    display->hline(135, 55, 30, CYAN, 1);
+    display->vline(150, 40, 30, CYAN, 1);
+
+    display->text(50, 100, "ABC", &Font20, WHITE, BLACK);
+    display->display();
+    DEV_Delay_ms(5000);
+
 }
