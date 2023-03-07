@@ -113,6 +113,56 @@ void Framebuf::rect(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_e
     }
 }
 
+void Framebuf::circle(uint8_t x, uint8_t y, uint8_t radius, uint16_t color, uint8_t size, bool fill)
+{
+    if (x > this->width || y > this->height) 
+        return;
+
+    int a, b;
+    int di;
+
+    if (fill) {
+        di = 3 - (radius << 1);
+        a = 0;
+        b = radius;
+        while (a <= b) {
+            this->hline(x - b, y - a, 2 * b + 1, color, size);
+            this->hline(x - b, y + a, 2 * b + 1, color, size);
+            this->hline(x - a, y - b, 2 * a + 1, color, size);
+            this->hline(x - a, y + b, 2 * a + 1, color, size);
+            if (di < 0)
+                di += 4 * a + 6;
+            else {
+                di += 10 + 4 * (a - b);
+                b--;
+            }
+            a++;
+        }
+    } else {
+        a = 0;
+        b = radius;
+        di = 3 - (radius << 1);
+        while (a <= b) {
+            this->point(x + a, y - b, color, size);
+            this->point(x + b, y - a, color, size);
+            this->point(x + b, y + a, color, size);
+            this->point(x + a, y + b, color, size);
+            this->point(x - a, y + b, color, size);
+            this->point(x - b, y + a, color, size);
+            this->point(x - b, y - a, color, size);
+            this->point(x - a, y - b, color, size);
+            if (di < 0)
+                di += 4 * a + 6;
+            else {
+                di += 10 + 4 * (a - b);
+                b--;
+            }
+            a++;
+        }
+    }
+}
+
+
 void Framebuf::clear(uint16_t color)
 {
     uint16_t color_swapped = _swap_bytes(color); // костыль....
