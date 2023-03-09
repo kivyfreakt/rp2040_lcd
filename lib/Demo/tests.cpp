@@ -1,8 +1,8 @@
 #include "tests.h"
+#include "clock.h"
 
 void test_display(LCD* display)
-{     
-
+{
     // full screen colors
     uint8_t color_count = 5;
     uint16_t colors[color_count] = {BLACK, WHITE, RED, GREEN, BLUE};
@@ -25,11 +25,11 @@ void test_display(LCD* display)
 
     // graph primitives demo
     display->clear(BLACK);
-    display->point(50, 41, BLACK, 1);
-    display->point(50, 46, BLACK, 2);
-    display->point(50, 51, BLACK, 3);
-    display->point(50, 56, BLACK, 4);
-    display->point(50, 61, BLACK, 5);
+    display->point(50, 41, WHITE, 1);
+    display->point(50, 46, WHITE, 2);
+    display->point(50, 51, WHITE, 3);
+    display->point(50, 56, WHITE, 4);
+    display->point(50, 61, WHITE, 5);
 
     display->line(60, 40, 90, 70, MAGENTA, 2);
     display->line(60, 70, 90, 40, MAGENTA, 2);
@@ -53,4 +53,8 @@ void test_display(LCD* display)
     display->text(30, 142, "ABCxyz123", &font20, WHITE, GREEN);
     display->text(30, 186, "ABCxyz123", &font24, BLUE, WHITE);
     display->display();
+    DEV_Delay_ms(TEST_DELAY);
+
+    // apps demo
+    draw_clock(display, 0, 24, 47);
 }

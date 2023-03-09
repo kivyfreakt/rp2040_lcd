@@ -65,13 +65,15 @@ void Turtle::move(int distance)
 void Turtle::right(int angle)
 {
     /* Turn the turtle to the right side */
-    direction -= angle;
+    direction += angle;
+    direction %= 360;
 }
 
 void Turtle::left(int angle)
 {
     /* Turn the turtle to the left side */
-    direction += angle;
+    direction -= angle;
+    direction %= 360;
 }
 
 void Turtle::save()

@@ -29,7 +29,7 @@ void Framebuf::point(uint8_t x, uint8_t y, uint16_t color, uint8_t size)
 
         for (int16_t x_i = 0; x_i < size; x_i++)
             for (int16_t y_i = 0; y_i < size; y_i++)
-                this->pixel(x + x_i - 1, y + y_i - 1, color);
+                this->pixel(x + x_i, y + y_i, color);
 
 }
 

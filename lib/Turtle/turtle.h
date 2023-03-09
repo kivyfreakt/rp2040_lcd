@@ -6,7 +6,7 @@
 #include <cmath>
 #include "framebuf.h"
 
-#define degToRad(deg) (deg * M_PI / 180)
+#define degToRad(deg) (deg * M_PI / 180.0)
 
 class Turtle
 {
