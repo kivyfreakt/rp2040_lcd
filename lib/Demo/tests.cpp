@@ -61,4 +61,7 @@ void test_display(LCD* display)
 
     // apps demo
     draw_clock(display, 0, 24, 47);
+    DEV_Delay_ms(TEST_DELAY);
+    draw_status(display, 249, 124, 38);
+    DEV_Delay_ms(TEST_DELAY);
 }

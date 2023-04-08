@@ -65,3 +65,16 @@ void draw_clock(Framebuf* canvas, uint8_t hour, uint8_t min, uint8_t sec)
 
     DEV_Delay_ms(50);
 }
+
+void draw_status(Framebuf* canvas, uint16_t status1, uint16_t status2, uint16_t status3)
+{   
+    canvas->clear(BLACK);
+
+    canvas->arc(LCD_H2, LCD_W2, 0, status1, LCD_H2 - 6, RED, 3);
+    canvas->arc(LCD_H2, LCD_W2, 0, status2, LCD_H2 - 12, GREEN, 3);
+    canvas->arc(LCD_H2, LCD_W2, 0, status3, LCD_H2 - 18, BLUE, 3);
+
+    canvas->display();
+
+    DEV_Delay_ms(50);
+}
