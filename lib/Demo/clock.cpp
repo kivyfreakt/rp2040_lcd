@@ -58,6 +58,9 @@ void draw_clock(Framebuf* canvas, uint8_t hour, uint8_t min, uint8_t sec)
     draw_arrow(canvas, min * 6 + sec / 10, 75, 2, arrow_color);
     draw_arrow(canvas, hour * 30 + min / 2, 50, 4, arrow_color);
 
+    canvas->circle(LCD_W2, LCD_H2, 5, riskdigit_color, 2, 0);
+    canvas->circle(LCD_W2, LCD_H2, 3, background, 1, 1);
+
     canvas->display();
 
     DEV_Delay_ms(50);

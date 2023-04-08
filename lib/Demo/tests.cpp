@@ -40,8 +40,12 @@ void test_display(LCD* display)
     display->hline(135, 55, 30, CYAN, 1);
     display->vline(150, 40, 30, CYAN, 1);
 
-    display->circle(67, 100, 14, RED, 2, 0);
-    display->circle(107, 100, 14, BLUE, 1, 1);
+    display->circle(67, 100, 14, MAROON, 2, 0);
+    display->circle(107, 100, 14, YELLOW, 1, 1);
+
+    display->arc(67, 140, 0, 90, 10, ORANGE, 1);
+    display->arc(107, 140, 0, 180, 10, PINK, 1);
+    display->arc(147, 140, 0, 270, 10, PURPLE, 1);
 
     display->display();
     DEV_Delay_ms(TEST_DELAY);

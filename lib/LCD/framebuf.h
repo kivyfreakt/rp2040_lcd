@@ -46,6 +46,7 @@ struct Framebuf
     void vline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void rect(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t, bool);
     void circle(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t, bool);
+    void arc(uint8_t, uint8_t, int16_t, int16_t, uint8_t, uint16_t, uint8_t);
 
     uint16_t alpha_blend(uint8_t, uint16_t, uint16_t);
     void gradient(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t, bool);

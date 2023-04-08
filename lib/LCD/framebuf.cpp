@@ -2,6 +2,7 @@
 #include "DEV_Config.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include <cmath>
 
 Framebuf::Framebuf(uint16_t* _canvas, uint8_t _width, uint8_t _height)
 {
@@ -27,18 +28,15 @@ void Framebuf::point(uint8_t x, uint8_t y, uint16_t color, uint8_t size)
     if (x > this->width || y > this->height) 
         return;
 
-        for (int16_t x_i = 0; x_i < size; x_i++)
-            for (int16_t y_i = 0; y_i < size; y_i++)
-                this->pixel(x + x_i, y + y_i, color);
+    for (int16_t x_i = 0; x_i < size; x_i++)
+        for (int16_t y_i = 0; y_i < size; y_i++)
+            this->pixel(x + x_i, y + y_i, color);
 
 }
 
 void Framebuf::line(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_end, uint16_t color, uint8_t size)
 {
 
-    if (x_start > this->width || y_start > this->height || x_end > this->width || y_end > this->height) 
-        return;
-    
     uint8_t x_point = x_start;
     uint8_t y_point = y_start;
 
@@ -79,18 +77,12 @@ void Framebuf::line(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_e
 
 void Framebuf::hline(uint8_t x_start, uint8_t y_start, uint8_t line_width, uint16_t color, uint8_t size)
 {
-    if (x_start > this->width || y_start > this->height)
-        return;
-    
     for (uint8_t x_point = x_start; x_point < x_start + line_width; x_point++)
         this->point(x_point, y_start, color, size);
 }
 
 void Framebuf::vline(uint8_t x_start, uint8_t y_start, uint8_t line_height, uint16_t color, uint8_t size)
 {
-    if (x_start > this->width || y_start > this->height)
-        return;
-    
     for (uint8_t y_point = y_start; y_point < y_start + line_height; y_point++)
         this->point(x_start, y_point, color, size);
 }
@@ -98,9 +90,6 @@ void Framebuf::vline(uint8_t x_start, uint8_t y_start, uint8_t line_height, uint
 
 void Framebuf::rect(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_end, uint16_t color, uint8_t size, bool fill)
 {
-    if (x_start > this->width || y_start > this->height || x_end > this->width || y_end > this->height) 
-        return;
-
     if (fill) {
         for(uint16_t i = y_start; i < y_end; i++) {
             this->line(x_start, i, x_end, i, color, size);
@@ -115,9 +104,6 @@ void Framebuf::rect(uint8_t x_start, uint8_t y_start, uint8_t x_end, uint8_t y_e
 
 void Framebuf::circle(uint8_t x, uint8_t y, uint8_t radius, uint16_t color, uint8_t size, bool fill)
 {
-    if (x > this->width || y > this->height) 
-        return;
-
     int a, b;
     int di;
 
@@ -276,4 +262,18 @@ uint16_t Framebuf::alpha_blend(uint8_t alpha, uint16_t color1, uint16_t color2)
     xgx += ((color1 & 0x07E0) - xgx) * alpha >> 8;
     // Recombine channels
     return (rxb & 0xF81F) | (xgx & 0x07E0);
+}
+
+
+void Framebuf::arc(uint8_t x, uint8_t y, int16_t start_angle, int16_t end_angle, uint8_t radius, uint16_t color, uint8_t size)
+{
+    uint8_t step = (size > 1 ? size / 2 : 1);
+
+    for (int angle = start_angle; angle < end_angle; angle += step)
+    {
+        float angle_rad = (float) angle * PI / 180;
+        int nx = cos(angle_rad) * radius + x;
+        int ny = sin(angle_rad) * radius + y;
+        circle(nx, ny, size, color, 1, true);
+    }
 }

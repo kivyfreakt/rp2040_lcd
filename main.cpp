@@ -7,6 +7,7 @@
 #include "DEV_Config.h"
 #include "lcd.h"
 
+#include "turtle.h"
 #include "tests.h"
 
 static uint16_t img[LCD_HEIGHT * LCD_WIDTH];

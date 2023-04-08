@@ -50,30 +50,28 @@ void Turtle::moveto(int x1, int y1)
 
 void Turtle::move(int distance)
 {
-    /* Crawl distance steps forward */
-    // calculate the new coordinates of the turtle
-    uint16_t dx = x + distance * cos(degToRad(direction));
-    uint16_t dy = y + distance * sin(degToRad(direction));
-
-    if (this->pen)
-        this->draw(dx, dy);
-
-    x = dx;
-    y = dy;
+    /* Move the turtle forward by a given distance */
+    uint8_t nx = x + distance * cos(degToRad(direction));
+    uint8_t ny = y + distance * sin(degToRad(direction));
+    if (pen)
+        draw(nx, ny);
+    x = nx;
+    y = ny;
 }
 
-void Turtle::right(int angle)
+void Turtle::right(float angle)
 {
     /* Turn the turtle to the right side */
+    float result = direction + angle;
+    if (result > 360.0 || result < 0)
+        angle = fmod(result, 360.0) - direction;
     direction += angle;
-    direction %= 360;
 }
 
-void Turtle::left(int angle)
+void Turtle::left(float angle)
 {
     /* Turn the turtle to the left side */
-    direction -= angle;
-    direction %= 360;
+    right(-angle);
 }
 
 void Turtle::save()

@@ -15,7 +15,7 @@ class Turtle
     std::stack <int> save_stack; // stack to store coordinates
     int x; //Current position of the turtle
     int y; //Current position of the turtle
-    int direction;  // position of the turtle's head in space( in degrees )
+    float direction;  // position of the turtle's head in space( in degrees )
     bool pen;
     uint16_t pen_color;
     uint8_t pen_size;
@@ -26,8 +26,8 @@ class Turtle
         Turtle(Framebuf*);
         void moveto(int, int);
         void move(int);
-        void right(int);
-        void left(int);
+        void right(float);
+        void left(float);
         void save();
         void restore();
 
