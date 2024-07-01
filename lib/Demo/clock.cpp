@@ -63,7 +63,7 @@ void draw_clock(Framebuf* canvas, uint8_t hour, uint8_t min, uint8_t sec)
 
     canvas->display();
 
-    DEV_Delay_ms(50);
+    sleep_ms(50);
 }
 
 void draw_status(Framebuf* canvas, uint16_t status1, uint16_t status2, uint16_t status3)
@@ -76,5 +76,5 @@ void draw_status(Framebuf* canvas, uint16_t status1, uint16_t status2, uint16_t 
 
     canvas->display();
 
-    DEV_Delay_ms(50);
+    sleep_ms(50);
 }

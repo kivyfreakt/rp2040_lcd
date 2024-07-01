@@ -27,25 +27,25 @@ LCD::LCD(uint16_t* canvas, uint8_t direction): Framebuf(canvas, LCD_HEIGHT, LCD_
 
 void LCD::reset()
 {
-    DEV_Digital_Write(LCD_RST_PIN, 1);
-    DEV_Delay_ms(100);
-    DEV_Digital_Write(LCD_RST_PIN, 0);
-    DEV_Delay_ms(100);
-    DEV_Digital_Write(LCD_RST_PIN, 1);
-    DEV_Digital_Write(LCD_CS_PIN, 0);
-    DEV_Delay_ms(100);
+    gpio_put(LCD_RST_PIN, 1);
+    sleep_ms(100);
+    gpio_put(LCD_RST_PIN, 0);
+    sleep_ms(100);
+    gpio_put(LCD_RST_PIN, 1);
+    gpio_put(LCD_CS_PIN, 0);
+    sleep_ms(100);
 }
 
 void LCD::command(uint8_t _command)
 {
-    DEV_Digital_Write(LCD_DC_PIN, 0);
-    DEV_SPI_WriteByte(_command);
+    gpio_put(LCD_DC_PIN, 0);
+    spi_write_blocking(SPI_PORT, &_command, 1);
 }
 
 void LCD::data(uint8_t _data)
 {
-    DEV_Digital_Write(LCD_DC_PIN, 1);
-    DEV_SPI_WriteByte(_data);
+    gpio_put(LCD_DC_PIN, 1);
+    spi_write_blocking(SPI_PORT, &_data, 1);
 }
 
 void LCD::set_windows(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
@@ -68,11 +68,11 @@ void LCD::set_windows(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 
 void LCD::init_reg()
 {
-  this->command(0xEF);
+    this->command(0xEF);
     this->command(0xEB);
     this->data(0x14);
 
-  this->command(0xFE);
+    this->command(0xFE);
     this->command(0xEF);
 
     this->command(0xEB);
@@ -124,8 +124,8 @@ void LCD::init_reg()
     this->data(0x08);
 
     this->command(0x3A);
-    this->data(0x55);//16bits/pixel
-    // this->data(0x05);
+    // this->data(0x55); //16bits/pixel
+    this->data(0x05);
 
     this->command(0x90);
     this->data(0x08);
@@ -170,32 +170,32 @@ void LCD::init_reg()
     this->data(0x08);
     this->data(0x08);
     this->data(0x26);
-     this->data(0x2A);
+    this->data(0x2A);
 
-     this->command(0xF1);
-     this->data(0x43);
-     this->data(0x70);
-     this->data(0x72);
-     this->data(0x36);
-     this->data(0x37);
-     this->data(0x6F);
+    this->command(0xF1);
+    this->data(0x43);
+    this->data(0x70);
+    this->data(0x72);
+    this->data(0x36);
+    this->data(0x37);
+    this->data(0x6F);
 
 
-     this->command(0xF2);
-     this->data(0x45);
-     this->data(0x09);
-     this->data(0x08);
-     this->data(0x08);
-     this->data(0x26);
-     this->data(0x2A);
+    this->command(0xF2);
+    this->data(0x45);
+    this->data(0x09);
+    this->data(0x08);
+    this->data(0x08);
+    this->data(0x26);
+    this->data(0x2A);
 
-     this->command(0xF3);
-     this->data(0x43);
-     this->data(0x70);
-     this->data(0x72);
-     this->data(0x36);
-     this->data(0x37);
-     this->data(0x6F);
+    this->command(0xF3);
+    this->data(0x43);
+    this->data(0x70);
+    this->data(0x72);
+    this->data(0x36);
+    this->data(0x37);
+    this->data(0x6F);
 
     this->command(0xED);
     this->data(0x1B);
@@ -332,7 +332,7 @@ void LCD::display()
 {    
     this->set_windows(0, 0, LCD_WIDTH, LCD_HEIGHT);
 
-    DEV_Digital_Write(LCD_DC_PIN, 1);
+    gpio_put(LCD_DC_PIN, 1);
 
     for (uint16_t j = 0; j < LCD_HEIGHT; j++)
         DEV_SPI_Write_nByte((uint8_t *)&(this->canvas[j*LCD_WIDTH]), LCD_WIDTH*2);

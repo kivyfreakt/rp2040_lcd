@@ -35,16 +35,15 @@
 #include "hardware/spi.h"
 #include "hardware/i2c.h"
 #include "hardware/pwm.h"
+#include "hardware/dma.h"
 
 /**
  * data
  **/
-#define UBYTE uint8_t
-#define UWORD uint16_t
-#define UDOUBLE uint32_t
 
 #define SPI_PORT spi1
 #define I2C_PORT i2c1
+
 /**
  * GPIOI config
  **/
@@ -64,21 +63,16 @@
 
 /*------------------------------------------------------------------------------------------------------*/
 
-void DEV_Digital_Write(uint16_t Pin, uint8_t Value);
+// void DEV_Digital_Write(uint16_t Pin, uint8_t Value);
 uint8_t DEV_Digital_Read(uint16_t Pin);
 
 void DEV_GPIO_Mode(uint16_t Pin, uint16_t Mode);
 void DEV_KEY_Config(uint16_t Pin);
-void DEV_Digital_Write(uint16_t Pin, uint8_t Value);
-uint8_t DEV_Digital_Read(uint16_t Pin);
 
 uint16_t DEC_ADC_Read(void);
 
-void DEV_SPI_WriteByte(uint8_t Value);
+// void DEV_SPI_WriteByte(uint8_t Value);
 void DEV_SPI_Write_nByte(uint8_t *pData, uint32_t Len);
-
-void DEV_Delay_ms(uint32_t xms);
-void DEV_Delay_us(uint32_t xus);
 
 void DEV_I2C_Write_Byte(uint8_t addr, uint8_t reg, uint8_t Value);
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len);

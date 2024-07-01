@@ -10,7 +10,7 @@ void test_display(LCD* display)
     {
         display->clear(colors[i]);
         display->display();
-        DEV_Delay_ms(TEST_DELAY);
+        sleep_ms(TEST_DELAY);
     }
 
     // gradients
@@ -20,7 +20,7 @@ void test_display(LCD* display)
     {
         display->gradient(0, 0, display->width, display->height, gradient_colors[i], gradient_colors[i+1], 0);
         display->display();
-        DEV_Delay_ms(TEST_DELAY);
+        sleep_ms(TEST_DELAY);
     }
 
     // graph primitives demo
@@ -48,7 +48,7 @@ void test_display(LCD* display)
     display->arc(147, 140, 0, 270, 10, PURPLE, 1);
 
     display->display();
-    DEV_Delay_ms(TEST_DELAY);
+    sleep_ms(TEST_DELAY);
 
     // fonts demo
     display->clear(BLACK);
@@ -57,11 +57,11 @@ void test_display(LCD* display)
     display->text(30, 142, "ABCxyz123", &font20, WHITE, GREEN);
     display->text(30, 186, "ABCxyz123", &font24, BLUE, WHITE);
     display->display();
-    DEV_Delay_ms(TEST_DELAY);
+    sleep_ms(TEST_DELAY);
 
     // apps demo
     draw_clock(display, 0, 24, 47);
-    DEV_Delay_ms(TEST_DELAY);
+    sleep_ms(TEST_DELAY);
     draw_status(display, 249, 124, 38);
-    DEV_Delay_ms(TEST_DELAY);
+    sleep_ms(TEST_DELAY);
 }

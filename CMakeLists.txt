@@ -7,13 +7,13 @@ pico_sdk_init()
 add_subdirectory(./lib/Config)
 add_subdirectory(./lib/LCD)
 add_subdirectory(./lib/Fonts)
-add_subdirectory(./lib/Turtle)
+# add_subdirectory(./lib/Turtle)
 add_subdirectory(./lib/Demo)
 
 include_directories(./lib/Config)
 include_directories(./lib/Fonts)
 include_directories(./lib/LCD)
-include_directories(./lib/Turtle)
+# include_directories(./lib/Turtle)
 include_directories(./lib/Demo)
 
 add_executable(main 
@@ -27,4 +27,15 @@ pico_enable_stdio_uart(main 1)
 # create map/bin/hex/uf2 file etc.
 pico_add_extra_outputs(main)
 
-target_link_libraries(main Demo Turtle LCD Fonts Config pico_stdlib hardware_spi hardware_i2c hardware_rtc)
+target_link_libraries(
+main
+pico_stdlib 
+hardware_spi 
+hardware_i2c 
+hardware_rtc 
+hardware_dma
+Demo 
+LCD 
+Fonts 
+Config 
+)
