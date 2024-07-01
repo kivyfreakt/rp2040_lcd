@@ -1,5 +1,5 @@
 #include "framebuf.h"
-#include "DEV_Config.h"
+#include "dev_config.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <cmath>

@@ -1,9 +1,4 @@
 #include "lcd.h"
-#include "framebuf.h"
-#include "DEV_Config.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 
 LCD::LCD(uint16_t* canvas): Framebuf(canvas, LCD_HEIGHT, LCD_WIDTH)
 {
@@ -124,8 +119,8 @@ void LCD::init_reg()
     this->data(0x08);
 
     this->command(0x3A);
-    // this->data(0x55); //16bits/pixel
-    this->data(0x05);
+    this->data(0x55); //16bits/pixel
+    // this->data(0x05);
 
     this->command(0x90);
     this->data(0x08);
@@ -335,5 +330,5 @@ void LCD::display()
     gpio_put(LCD_DC_PIN, 1);
 
     for (uint16_t j = 0; j < LCD_HEIGHT; j++)
-        DEV_SPI_Write_nByte((uint8_t *)&(this->canvas[j*LCD_WIDTH]), LCD_WIDTH*2);
+        spi_write_blocking(SPI_PORT, (uint8_t *)&(this->canvas[j*LCD_WIDTH]), LCD_WIDTH*2);
 }

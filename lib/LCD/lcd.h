@@ -1,7 +1,7 @@
 #ifndef __LCD_H
 #define __LCD_H	
     
-#include "DEV_Config.h"
+#include "dev_config.h"
 #include "framebuf.h"
 #include <stdint.h>
 

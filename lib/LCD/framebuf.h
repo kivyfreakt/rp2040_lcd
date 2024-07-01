@@ -1,7 +1,7 @@
 #ifndef __FRAMEBUF_H
 #define __FRAMEBUF_H
 
-#include "DEV_Config.h"
+#include "dev_config.h"
 #include "../Fonts/fonts.h"
 
 #define _swap_bytes(val) ( (((val)>>8)&0x00FF)|(((val)<<8)&0xFF00) )
