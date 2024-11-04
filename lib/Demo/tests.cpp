@@ -4,8 +4,8 @@
 void test_display(LCD* display)
 {
     // full screen colors
-    uint8_t color_count = 5;
-    uint16_t colors[color_count] = {BLACK, WHITE, RED, GREEN, BLUE};
+    uint8_t color_count = 4;
+    uint16_t colors[color_count] = {WHITE, RED, GREEN, BLUE};
     for (uint8_t i = 0; i < color_count; i++)
     {
         display->clear(colors[i]);

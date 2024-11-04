@@ -5,16 +5,19 @@ project(pico_lcd)
 pico_sdk_init()
 
 add_subdirectory(./lib/Config)
-add_subdirectory(./lib/LCD)
 add_subdirectory(./lib/Fonts)
+add_subdirectory(./lib/LCD)
+add_subdirectory(./lib/Watchfaces)
 # add_subdirectory(./lib/Turtle)
-add_subdirectory(./lib/Demo)
+# add_subdirectory(./lib/Demo)
 
 include_directories(./lib/Config)
 include_directories(./lib/Fonts)
 include_directories(./lib/LCD)
+include_directories(./lib/Watchfaces)
+
 # include_directories(./lib/Turtle)
-include_directories(./lib/Demo)
+# include_directories(./lib/Demo)
 
 add_executable(main 
 main.cpp
@@ -34,8 +37,9 @@ hardware_spi
 hardware_i2c 
 hardware_rtc 
 hardware_dma
-Demo 
+# Demo
+Watchfaces
 LCD 
-Fonts 
+Fonts
 Config 
 )
