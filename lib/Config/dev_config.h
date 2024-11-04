@@ -27,6 +27,7 @@
 
 
 void dev_gpio_mode(uint16_t Pin, uint16_t Mode);
+void dev_gpio_init();
 uint8_t dev_module_init(void);
 
 #endif

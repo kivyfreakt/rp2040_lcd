@@ -3,21 +3,21 @@
 LCD::LCD(uint16_t* canvas): Framebuf(canvas, LCD_HEIGHT, LCD_WIDTH)
 {
     this->reset();
-    sleep_ms(100);
-    this->set_direction(HORIZONTAL);
-    this->init_reg();
+    sleep_ms(50);
+    this->init_reg(UP);
     this->clear(BLACK);
     this->display();
+    this->command(0x29); // fix noise at startup
 }
 
 LCD::LCD(uint16_t* canvas, uint8_t direction): Framebuf(canvas, LCD_HEIGHT, LCD_WIDTH)
 {
     this->reset();
-    sleep_ms(100);
-    this->set_direction(direction);
-    this->init_reg();
+    sleep_ms(50);
+    this->init_reg(direction);
     this->clear(BLACK);
     this->display();
+    this->command(0x29); // fix noise at startup
 }
 
 void LCD::reset()
@@ -61,7 +61,7 @@ void LCD::set_windows(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 }
 
 
-void LCD::init_reg()
+void LCD::init_reg(uint8_t _direction)
 {
     this->command(0xEF);
     this->command(0xEB);
@@ -115,12 +115,19 @@ void LCD::init_reg()
     this->data(0x20);
 
     this->command(0x36);
-    // this->data(0x00); // RGB???
-    this->data(0x08);
+    uint8_t MemoryAccessReg=0x08;
 
+    switch(_direction){
+        case 0: MemoryAccessReg=0x08;break;
+        case 1: MemoryAccessReg=0x68;break;
+        case 2: MemoryAccessReg=0xc8;break;
+        case 3: MemoryAccessReg=0xa8;break;
+    }
+    this->data(MemoryAccessReg); //0x08 set RG
+    
     this->command(0x3A);
-    this->data(0x55); //16bits/pixel
-    // this->data(0x05);
+    // this->data(0x55); //16bits/pixel
+    this->data(0x05);
 
     this->command(0x90);
     this->data(0x08);
@@ -296,31 +303,7 @@ void LCD::init_reg()
 
     this->command(0x11);
     sleep_ms(120);
-    this->command(0x29);
-    sleep_ms(20);
-}
-
-
-void LCD::set_direction(uint8_t _direction){
-
-    this->direction = _direction;
-
-    uint8_t MemoryAccessReg=0x08;
-
-    switch(_direction){
-        case 0: MemoryAccessReg=0x08;break;
-        case 1: MemoryAccessReg=0x68;break;
-        case 2: MemoryAccessReg=0xc8;break;
-        case 3: MemoryAccessReg=0xa8;break;
-    }
-
-    this->command(0x36); //MX, MY, RGB mode
-    this->data(MemoryAccessReg); //0x08 set RGB
-}
-
-
-uint8_t LCD::get_direction(){
-    return this->direction;
+    // this->command(0x29); // after data to screen
 }
 
 void LCD::display()

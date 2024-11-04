@@ -10,13 +10,10 @@ static uint16_t img[LCD_HEIGHT * LCD_WIDTH];
 
 int main(void)
 {
-
     if (dev_module_init() != 0)
         return -1;
 
-    LCD lcd((uint16_t *)&img, HORIZONTAL);
-    
-    // DEV_SET_PWM(60);
+    LCD lcd((uint16_t *)&img, RIGHT);
 
     test_display(&lcd);
 

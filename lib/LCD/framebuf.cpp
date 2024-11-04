@@ -16,9 +16,8 @@ void Framebuf::pixel(uint8_t x, uint8_t y, uint16_t color)
     if (x > this->width || y > this->height) 
         return;
 
-    uint16_t color_swapped = _swap_bytes(color); // костыль....
-    // если ставить порядок rgb в init, канал зеленого и синего меняются местами....
-    
+    uint16_t color_swapped = _swap_bytes(color);
+
     this->canvas[x + y*this->width] = color_swapped;
 }
 

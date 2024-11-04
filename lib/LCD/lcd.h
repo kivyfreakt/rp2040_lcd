@@ -12,10 +12,11 @@
 #define LCD_WIDTH 240
 #define LCD_W2 120
 #define LCD_H2 120
-#define LCD_SZ LCD_W*LCD_H*2
 
-#define HORIZONTAL 0
-#define VERTICAL 1
+#define UP 0
+#define RIGHT 1
+#define DOWN 2
+#define LEFT 3
 
 class LCD : public Framebuf
 {
@@ -23,7 +24,7 @@ class LCD : public Framebuf
 
     void data(uint8_t);
     void command(uint8_t);
-    void init_reg();
+    void init_reg(uint8_t);
     void set_windows(uint16_t, uint16_t, uint16_t, uint16_t);
 
     public:
@@ -31,9 +32,6 @@ class LCD : public Framebuf
         LCD(uint16_t*, uint8_t);
         void reset();
         void display() override;
-
-        void set_direction(uint8_t);
-        uint8_t get_direction();
 };
 
 #endif

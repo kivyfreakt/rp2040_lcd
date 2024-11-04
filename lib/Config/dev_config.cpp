@@ -20,22 +20,6 @@ void dev_gpio_mode(uint16_t Pin, uint16_t Mode)
     }
 }
 
-// /*
-// ** PWM
-// */
-// void dev_set_pwm(uint8_t Value)
-// {
-//     if (Value < 0 || Value > 100)
-//     {
-//         printf("DEV_SET_PWM Error \r\n");
-//     }
-//     else
-//     {
-//         pwm_set_chan_level(slice_num, PWM_CHAN_B, Value);
-//     }
-// }
-
-
 void dev_gpio_init(void)
 {
     dev_gpio_mode(LCD_RST_PIN, 1);
@@ -49,11 +33,6 @@ void dev_gpio_init(void)
 }
 
 
-/******************************************************************************
-function:	Module Initialize, the library and initialize the pins, SPI protocol
-parameter:
-Info:
-******************************************************************************/
 uint8_t dev_module_init(void)
 {
     stdio_init_all();
@@ -85,6 +64,8 @@ uint8_t dev_module_init(void)
     gpio_pull_up(DEV_SDA_PIN);
     gpio_pull_up(DEV_SCL_PIN);
 
+    // Set lcd backlight
+    pwm_set_chan_level(slice_num, PWM_CHAN_B, 69);
 
     // init dma
     dma_channel = dma_claim_unused_channel(true);
