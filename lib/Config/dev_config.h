@@ -1,7 +1,7 @@
 #ifndef _DEV_CONFIG_H_
 #define _DEV_CONFIG_H_
 
-#include "stdio.h"
+// #include "stdio.h"
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
 #include "hardware/spi.h"

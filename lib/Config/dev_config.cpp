@@ -73,6 +73,6 @@ uint8_t dev_module_init(void)
     channel_config_set_transfer_data_size(&cfg, DMA_SIZE_8);
 	channel_config_set_dreq(&cfg, spi_get_dreq(SPI_PORT, true));
 
-    printf("DEV_Module_Init OK \r\n");
+    // printf("DEV_Module_Init OK \r\n");
     return 0;
 }

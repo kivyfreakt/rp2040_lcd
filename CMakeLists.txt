@@ -5,6 +5,7 @@ project(pico_lcd)
 pico_sdk_init()
 
 add_subdirectory(./lib/Config)
+add_subdirectory(./lib/Utils)
 add_subdirectory(./lib/Fonts)
 add_subdirectory(./lib/LCD)
 add_subdirectory(./lib/Watchfaces)
@@ -12,6 +13,7 @@ add_subdirectory(./lib/Watchfaces)
 # add_subdirectory(./lib/Demo)
 
 include_directories(./lib/Config)
+include_directories(./lib/Utils)
 include_directories(./lib/Fonts)
 include_directories(./lib/LCD)
 include_directories(./lib/Watchfaces)
@@ -38,6 +40,7 @@ hardware_i2c
 hardware_rtc 
 hardware_dma
 # Demo
+Utils
 Watchfaces
 LCD 
 Fonts

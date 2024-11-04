@@ -2,8 +2,10 @@
 #define __WATCHFACE_H
 
 #include <cmath>
+#include <ctime>
 #include "pico/util/datetime.h"
 #include "lcd.h"
+#include "utils.h"
 
 class Watchface
 {

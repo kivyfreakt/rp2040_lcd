@@ -1,5 +1,14 @@
 #include "default_watchface.h"
 
+void DefaultWatchface::draw_date(Framebuf* canvas, datetime_t* t)
+{   
+    char buf[7]; 
+    get_day_month(t->day, t->month, buf);
+
+    canvas->text(LCD_W2+20, LCD_H2-13, get_day_name(t->dotw), &font12, TEXT_COLOR, BACKGROUND);
+    canvas->text(LCD_W2+20, LCD_H2-1, buf, &font12, TEXT_COLOR, BACKGROUND);
+}
+
 void DefaultWatchface::draw_arrow(Framebuf* canvas, int16_t angle, int8_t length, uint8_t size, uint16_t color) 
 {
     angle -= 90;
@@ -12,16 +21,11 @@ void DefaultWatchface::draw_arrow(Framebuf* canvas, int16_t angle, int8_t length
 
 void DefaultWatchface::draw_clock(Framebuf* canvas, datetime_t* t) 
 {
-    uint16_t background, risk_color, hour_color, min_color, sec_color;
+    uint16_t risk_color;
 
-    background = BLACK;
     risk_color = WHITE;
 
-    hour_color = BLUE;
-    min_color = ORANGE;
-    sec_color = RED;
-
-    canvas->clear(background);
+    canvas->clear(BACKGROUND);
 
     uint8_t radius1 = 119;
     for (uint16_t angle = 0; angle <= 360; angle += 6) 
@@ -30,12 +34,12 @@ void DefaultWatchface::draw_clock(Framebuf* canvas, datetime_t* t)
         if (!(angle % 30))
         {
             riskSize = 10;
-            risk_color = WHITE;
+            risk_color = RISK_COLOR;
         }
         else
         {
             riskSize = 2;
-            risk_color = DARKGREY;
+            risk_color = SMALL_RISK_COLOR;
         }
 
         uint8_t radius2 = radius1 - riskSize;
@@ -48,14 +52,19 @@ void DefaultWatchface::draw_clock(Framebuf* canvas, datetime_t* t)
         canvas->line(x1, y1, x2, y2, risk_color, 2);
     }
 
-    draw_arrow(canvas, t->hour * 30 + t->min / 2, 50, 4, hour_color);
-    draw_arrow(canvas, t->min * 6 + t->sec / 10, 75, 2, min_color);
-    draw_arrow(canvas, t->sec * 6, 100, 1, sec_color);
-    draw_arrow(canvas, t->sec * 6, -25, 1, sec_color); // dirty way to add more len to sec line
+    // draw date
+    draw_date(canvas, t);
 
-    canvas->circle(LCD_W2, LCD_H2, 5, background, 2, 1);
-    canvas->circle(LCD_W2, LCD_H2, 5, min_color, 2, 0);
-    canvas->circle(LCD_W2, LCD_H2, 2, sec_color, 1, 1);
+    // draw arrows
+    draw_arrow(canvas, t->hour * 30 + t->min / 2, 50, 4, HOUR_COLOR);
+    draw_arrow(canvas, t->min * 6 + t->sec / 10, 75, 2, MIN_COLOR);
+    draw_arrow(canvas, t->sec * 6, 100, 1, SEC_COLOR);
+    draw_arrow(canvas, t->sec * 6, -25, 1, SEC_COLOR); // dirty way to add more len to sec line
+
+    // prettify
+    canvas->circle(LCD_W2, LCD_H2, 5, BACKGROUND, 2, 1);
+    canvas->circle(LCD_W2, LCD_H2, 5, MIN_COLOR, 2, 0);
+    canvas->circle(LCD_W2, LCD_H2, 2, SEC_COLOR, 1, 1);
 
     canvas->display();
 
