@@ -5,7 +5,7 @@
 #include "hardware/rtc.h"
 #include "dev_config.h"
 #include "lcd.h"
-#include "default_watchface.h"
+#include "minimal_digital_watchface.h"
 
 static uint16_t img[LCD_HEIGHT * LCD_WIDTH];
 
@@ -16,7 +16,7 @@ int main(void)
         return -1;
 
     LCD lcd((uint16_t *)&img, RIGHT);
-    Watchface *default_clock = new DefaultWatchface();
+    Watchface *default_clock = new MinimalDigitalWatchface();
 
     datetime_t t = {
             .year  = 2024,
