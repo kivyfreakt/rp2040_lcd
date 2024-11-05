@@ -16,7 +16,8 @@ void DefaultWatchface::draw_arrow(Framebuf* canvas, int16_t angle, int8_t length
     int x = cos(angleRad) * length + LCD_W2;
     int y = sin(angleRad) * length + LCD_H2;
 
-    canvas->line(LCD_W2, LCD_H2, x, y, color, size);
+    // canvas->line(LCD_W2, LCD_H2, x, y, color, size);
+    canvas->smoothline(LCD_W2, LCD_H2, x, y, size, color, BACKGROUND);
 }
 
 void DefaultWatchface::draw_clock(Framebuf* canvas, datetime_t* t) 
@@ -49,7 +50,7 @@ void DefaultWatchface::draw_clock(Framebuf* canvas, datetime_t* t)
         int x2 = cos(rad) * radius2 + LCD_W2;
         int y2 = sin(rad) * radius2 + LCD_H2;
 
-        canvas->line(x1, y1, x2, y2, risk_color, 2);
+        canvas->smoothline(x1, y1, x2, y2, 2, risk_color, BACKGROUND);
     }
 
     // draw date

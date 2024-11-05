@@ -41,6 +41,7 @@ struct Framebuf
     virtual void display() = 0;
     void clear(uint16_t);
     void pixel(uint8_t, uint8_t, uint16_t);
+    void pixel(uint8_t, uint8_t, uint16_t, uint8_t, uint16_t);
     void point(uint8_t, uint8_t, uint16_t, uint8_t);
     void line(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
     void hline(uint8_t, uint8_t, uint8_t, uint16_t, uint8_t);
@@ -55,6 +56,10 @@ struct Framebuf
     // text
     void ch(uint8_t, uint8_t, const char, Font*, uint16_t, uint16_t);
     void text(uint8_t, uint8_t, const char *, Font*, uint16_t, uint16_t);
+
+    float smoothline_distance(float xpax, float ypay, float bax, float bay, float dr);
+    void smoothline(float ax, float ay, float bx, float by, float ar, float br, uint16_t fg_color, uint16_t bg_color);
+    void smoothline(float ax, float ay, float bx, float by, float wd, uint16_t fg_color, uint16_t bg_color);
 };
 
 #endif

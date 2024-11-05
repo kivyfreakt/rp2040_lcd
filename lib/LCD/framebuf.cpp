@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <cmath>
 
+constexpr float PixelAlphaGain   = 255.0;
+constexpr float LoAlphaTheshold  = 1.0/32.0;
+constexpr float HiAlphaTheshold  = 1.0 - LoAlphaTheshold;
+constexpr float deg2rad      = 3.14159265359/180.0;
+
+
 Framebuf::Framebuf(uint16_t* _canvas, uint8_t _width, uint8_t _height)
 {
     this->canvas = _canvas;
@@ -21,6 +27,16 @@ void Framebuf::pixel(uint8_t x, uint8_t y, uint16_t color)
     this->canvas[x + y*this->width] = color_swapped;
 }
 
+void Framebuf::pixel(uint8_t x, uint8_t y, uint16_t color, uint8_t alpha, uint16_t bg_color)
+{
+    if (x > this->width || y > this->height) 
+        return;
+
+    color = alpha_blend(alpha, color, bg_color);
+    uint16_t color_swapped = _swap_bytes(color);
+    
+    this->canvas[x + y*this->width] = color_swapped;
+}
 
 void Framebuf::point(uint8_t x, uint8_t y, uint16_t color, uint8_t size)
 {
@@ -275,4 +291,98 @@ void Framebuf::arc(uint8_t x, uint8_t y, int16_t start_angle, int16_t end_angle,
         int ny = sin(angle_rad) * radius + y;
         circle(nx, ny, size, color, 1, true);
     }
+}
+
+void Framebuf::smoothline(float ax, float ay, float bx, float by, float wd, uint16_t fg_color, uint16_t bg_color)
+{
+    smoothline(ax, ay, bx, by, wd/2.0, wd/2.0, fg_color, bg_color);
+}
+
+void Framebuf::smoothline(float ax, float ay, float bx, float by, float ar, float br, uint16_t fg_color, uint16_t bg_color)
+{
+
+    if ( (ar < 0.0) || (br < 0.0) )return;
+    if ( (fabsf(ax - bx) < 0.01f) && (fabsf(ay - by) < 0.01f) ) bx += 0.01f;  // Avoid divide by zero
+
+    // Find line bounding box
+    int32_t x0 = (int32_t)floorf(fminf(ax-ar, bx-br));
+    int32_t x1 = (int32_t) ceilf(fmaxf(ax+ar, bx+br));
+    int32_t y0 = (int32_t)floorf(fminf(ay-ar, by-br));
+    int32_t y1 = (int32_t) ceilf(fmaxf(ay+ar, by+br));
+
+    // if (!clipWindow(&x0, &y0, &x1, &y1)) return;
+
+    // Establish x start and y start
+    int32_t ys = ay;
+    if ((ax-ar)>(bx-br)) ys = by;
+
+    float rdt = ar - br; // Radius delta
+    float alpha = 1.0f;
+    ar += 0.5;
+
+    uint16_t bg = bg_color;
+    float xpax, ypay, bax = bx - ax, bay = by - ay;
+
+    int32_t xs = x0;
+    // Scan bounding box from ys down, calculate pixel intensity from distance to line
+    for (int32_t yp = ys; yp <= y1; yp++) 
+    {
+        bool swin = true;  // Flag to start new window area
+        bool endX = false; // Flag to skip pixels
+        ypay = yp - ay;
+        for (int32_t xp = xs; xp <= x1; xp++)
+        {
+            if (endX) if (alpha <= LoAlphaTheshold) break;  
+            // Skip right side
+            xpax = xp - ax;
+            alpha = ar - smoothline_distance(xpax, ypay, bax, bay, rdt);
+            if (alpha <= LoAlphaTheshold ) continue;
+            // Track edge to minimise calculations
+            if (!endX) { endX = true; xs = xp; }
+            if (alpha > HiAlphaTheshold) {
+                this->pixel(xp, yp, fg_color);
+                continue;
+            }
+
+            this->pixel(xp, yp, fg_color, alpha*PixelAlphaGain, bg);
+        }
+    }
+
+    // Reset x start to left side of box
+    xs = x0;
+    // Scan bounding box from ys-1 up, calculate pixel intensity from distance to line
+    for (int32_t yp = ys-1; yp >= y0; yp--) 
+    {
+        bool swin = true;  // Flag to start new window area
+        bool endX = false; // Flag to skip pixels
+        ypay = yp - ay;
+        for (int32_t xp = xs; xp <= x1; xp++) 
+        {
+            if (endX) if (alpha <= LoAlphaTheshold) break;  // Skip right side of drawn line
+            xpax = xp - ax;
+            alpha = ar - smoothline_distance(xpax, ypay, bax, bay, rdt);
+            if (alpha <= LoAlphaTheshold ) continue;
+            // Track line boundary
+            if (!endX) { endX = true; xs = xp; }
+                        if (alpha > HiAlphaTheshold) {
+                this->pixel(xp, yp, fg_color);
+                continue;
+            }
+
+            this->pixel(xp, yp, fg_color, alpha*PixelAlphaGain, bg);
+        }
+    }
+
+}
+
+
+// /***************************************************************************************
+// ** Function name:           lineDistance - private helper function for drawWedgeLine
+// ** Description:             returns distance of px,py to closest part of a to b wedge
+// ***************************************************************************************/
+inline float Framebuf::smoothline_distance(float xpax, float ypay, float bax, float bay, float dr)
+{
+  float h = fmaxf(fminf((xpax * bax + ypay * bay) / (bax * bax + bay * bay), 1.0f), 0.0f);
+  float dx = xpax - bax * h, dy = ypay - bay * h;
+  return sqrtf(dx * dx + dy * dy) + h * dr;
 }
