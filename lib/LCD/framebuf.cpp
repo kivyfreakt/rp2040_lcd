@@ -9,7 +9,6 @@ constexpr float LoAlphaTheshold  = 1.0/32.0;
 constexpr float HiAlphaTheshold  = 1.0 - LoAlphaTheshold;
 constexpr float deg2rad      = 3.14159265359/180.0;
 
-
 Framebuf::Framebuf(uint16_t* _canvas, uint8_t _width, uint8_t _height)
 {
     this->canvas = _canvas;
@@ -310,8 +309,6 @@ void Framebuf::smoothline(float ax, float ay, float bx, float by, float ar, floa
     int32_t y0 = (int32_t)floorf(fminf(ay-ar, by-br));
     int32_t y1 = (int32_t) ceilf(fmaxf(ay+ar, by+br));
 
-    // if (!clipWindow(&x0, &y0, &x1, &y1)) return;
-
     // Establish x start and y start
     int32_t ys = ay;
     if ((ax-ar)>(bx-br)) ys = by;
@@ -375,11 +372,6 @@ void Framebuf::smoothline(float ax, float ay, float bx, float by, float ar, floa
 
 }
 
-
-// /***************************************************************************************
-// ** Function name:           lineDistance - private helper function for drawWedgeLine
-// ** Description:             returns distance of px,py to closest part of a to b wedge
-// ***************************************************************************************/
 inline float Framebuf::smoothline_distance(float xpax, float ypay, float bax, float bay, float dr)
 {
   float h = fmaxf(fminf((xpax * bax + ypay * bay) / (bax * bax + bay * bay), 1.0f), 0.0f);
