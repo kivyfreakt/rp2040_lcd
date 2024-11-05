@@ -5,7 +5,7 @@
 #include "hardware/rtc.h"
 #include "dev_config.h"
 #include "lcd.h"
-#include "minimal_digital_watchface.h"
+#include "default_watchface.h"
 
 static uint16_t img[LCD_HEIGHT * LCD_WIDTH];
 
@@ -16,7 +16,7 @@ int main(void)
         return -1;
 
     LCD lcd((uint16_t *)&img, RIGHT);
-    Watchface *default_clock = new MinimalDigitalWatchface();
+    Watchface *default_clock = new DefaultWatchface();
 
     datetime_t t = {
             .year  = 2024,
@@ -34,6 +34,9 @@ int main(void)
     // clk_sys is >2000x faster than clk_rtc, so datetime is not updated immediately when rtc_get_datetime() is called.
     // The delay is up to 3 RTC clock cycles (which is 64us with the default clock settings)
     sleep_us(64);
+
+    // lcd.gradient(0, 0, lcd.width, lcd.height, BLUE, BLACK, 0);
+    // lcd.display();
 
     // loop
     while(true)

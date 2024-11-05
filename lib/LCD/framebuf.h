@@ -31,6 +31,7 @@
 struct Framebuf
 {
     uint16_t* canvas;
+
     uint8_t width;
     uint8_t height;
 

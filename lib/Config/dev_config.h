@@ -25,8 +25,11 @@
 #define BAT_ADC_PIN     (29)
 #define BAR_CHANNEL     (3)
 
+static uint slice_num;
+static int dma_channel;
+static dma_channel_config cfg;
 
-void dev_gpio_mode(uint16_t Pin, uint16_t Mode);
+void dev_gpio_mode(uint16_t, uint16_t);
 void dev_gpio_init();
 uint8_t dev_module_init(void);
 

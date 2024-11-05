@@ -1,9 +1,5 @@
 #include "dev_config.h"
 
-uint slice_num;
-int dma_channel;
-dma_channel_config cfg;
-
 /**
  * GPIO Mode
  **/
@@ -53,7 +49,9 @@ uint8_t dev_module_init(void)
     pwm_set_enabled(slice_num, true);
 
     // SPI Config
-    spi_init(SPI_PORT, 40000 * 1000);
+
+    // spi_init(SPI_PORT, 40000 * 1000);
+    spi_init(SPI_PORT, 105535000);
     gpio_set_function(LCD_CLK_PIN, GPIO_FUNC_SPI);
     gpio_set_function(LCD_MOSI_PIN, GPIO_FUNC_SPI);
 
@@ -72,7 +70,10 @@ uint8_t dev_module_init(void)
     cfg = dma_channel_get_default_config(dma_channel);
     channel_config_set_transfer_data_size(&cfg, DMA_SIZE_8);
 	channel_config_set_dreq(&cfg, spi_get_dreq(SPI_PORT, true));
+    // channel_config_set_read_increment(&cfg, true);
+    // channel_config_set_write_increment(&cfg, true);
 
     // printf("DEV_Module_Init OK \r\n");
     return 0;
 }
+

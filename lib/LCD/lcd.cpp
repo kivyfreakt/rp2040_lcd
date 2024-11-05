@@ -126,8 +126,8 @@ void LCD::init_reg(uint8_t _direction)
     this->data(MemoryAccessReg); //0x08 set RG
     
     this->command(0x3A);
-    // this->data(0x55); //16bits/pixel
-    this->data(0x05);
+    this->data(0x55); //16bits/pixel
+    // this->data(0x05);
 
     this->command(0x90);
     this->data(0x08);
@@ -312,6 +312,17 @@ void LCD::display()
 
     gpio_put(LCD_DC_PIN, 1);
 
-    for (uint16_t j = 0; j < LCD_HEIGHT; j++)
-        spi_write_blocking(SPI_PORT, (uint8_t *)&(this->canvas[j*LCD_WIDTH]), LCD_WIDTH*2);
+    // for (uint16_t j = 0; j < LCD_HEIGHT; j++)
+        // spi_write_blocking(SPI_PORT, this->canvas[j*LCD_WIDTH], LCD_WIDTH*2);
+    
+    spi_write_blocking(SPI_PORT, (uint8_t *)&(this->canvas[0]), LCD_HEIGHT * LCD_WIDTH * 2);
+
+    // dma_channel_configure (
+    //     dma_channel,
+    //     &cfg,
+    //     &spi_get_hw(SPI_PORT)->dr, //SPI bus output data register address
+    //     (void*)&(this->canvas[0]), //Address of the color data array to be refreshed
+    //     LCD_HEIGHT*LCD_WIDTH*2,
+    //     true //Transfer immediately after setup
+    // );
 }
